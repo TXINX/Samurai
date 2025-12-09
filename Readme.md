@@ -1,5 +1,7 @@
 # 墨影武士 · Samurai Showdown
 
+<p align="center">🔗 <a href="https://txinx.github.io/Samurai/" target="_blank">试玩在线版本 · Play Online</a> 🔥</p>
+
 简体中文 / English — 简洁的双语说明，适用于 GitHub 仓库首页显示。
 
 ---

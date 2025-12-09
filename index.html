@@ -17,44 +17,6 @@
 
         /* ---------------- UI Elements ---------------- */
 
-        .combo-counter {
-            position: absolute;
-            bottom: 150px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 40px;
-            color: #b91c1c;
-            font-weight: bold;
-            opacity: 0;
-            transition: opacity 0.1s;
-            text-shadow: 2px 2px 0 #fff;
-            pointer-events: none;
-            z-index: 5;
-        }
-        
-        .skill-ready-text {
-            position: absolute;
-            bottom: 110px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 20px;
-            font-weight: bold;
-            display: flex;
-            gap: 20px;
-            pointer-events: none;
-            z-index: 5;
-        }
-        
-        .ready-q { color: #00bcd4; text-shadow: 0 0 10px #00bcd4; opacity: 0; transition: opacity 0.3s; }
-        .ready-e { color: #ffd700; text-shadow: 0 0 10px #ffd700; opacity: 0; transition: opacity 0.3s; }
-        .visible { opacity: 1 !important; animation: pulse 1s infinite; }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
-        }
-
         canvas {
             display: block;
             cursor: crosshair;
@@ -72,61 +34,135 @@
             justify-content: space-between;
         }
 
-        .hud-top {
-            padding: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
+        /* --- New HUD Layout --- */
+
+        /* Score at Top Center */
+        .hud-top-center {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            z-index: 5;
         }
 
-        .health-container {
-            width: 300px;
+        .score-board {
+            font-size: 48px;
+            color: #1a1a1a;
+            text-shadow: 2px 2px 0px rgba(255,255,255,0.5);
+            font-weight: bold;
+        }
+
+        /* Controls at Top Left */
+        .controls-hint {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: #555;
+            font-size: 14px;
+            background: rgba(255,255,255,0.6);
+            padding: 10px;
+            border-radius: 4px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            text-align: left;
+            line-height: 1.8;
+        }
+
+        /* Status Bars at Bottom Center */
+        .hud-bottom-center {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 500px;
+            z-index: 5;
+        }
+
+        .bar-label {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            font-weight: bold;
+            color: #1a1a1a;
+            margin-bottom: 2px;
+            text-shadow: 1px 1px 0 #fff;
         }
 
         .health-bar-bg {
             width: 100%;
-            height: 20px;
-            background: rgba(0,0,0,0.2);
+            background: rgba(0,0,0,0.5);
             border: 2px solid #1a1a1a;
             transform: skewX(-15deg);
-            margin-bottom: 5px;
+            margin-bottom: 8px;
             position: relative;
             overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
         }
 
         .health-bar-fill {
-            width: 100%;
             height: 100%;
-            background: #b91c1c;
             transition: width 0.1s;
         }
-        
+
+        /* Specific Bar Colors & Sizes */
+        #hp-bg { height: 24px; }
+        #hp-bar { background: #b91c1c; } /* Red */
+
+        #st-bg { height: 10px; width: 400px; }
+        #st-bar { background: #d4af37; } /* Gold */
+
+        #ult-bg { height: 16px; width: 480px; border-color: #006064; }
         .ult-bar-fill {
             width: 0%;
             height: 100%;
             background: linear-gradient(90deg, #006064, #00bcd4, #ffd700);
-            box-shadow: 0 0 10px #00bcd4;
+            box-shadow: 0 0 15px #00bcd4;
             transition: width 0.2s;
         }
-        
-        .marker-20 { position: absolute; left: 20%; top: 0; bottom: 0; width: 2px; background: rgba(255,255,255,0.5); z-index: 2; }
-        .marker-30 { position: absolute; left: 30%; top: 0; bottom: 0; width: 2px; background: rgba(255,255,255,0.5); z-index: 2; }
 
-        .score-board {
-            font-size: 32px;
-            color: #1a1a1a;
-            text-shadow: 2px 2px 0px rgba(0,0,0,0.1);
+        /* Markers for Ult */
+        .marker-20 { position: absolute; left: 20%; top: 0; bottom: 0; width: 2px; background: rgba(255,255,255,0.6); z-index: 2; }
+        .marker-30 { position: absolute; left: 30%; top: 0; bottom: 0; width: 2px; background: rgba(255,255,255,0.6); z-index: 2; }
+
+        /* Skill Ready Indicators */
+        .skill-ready-container {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            padding: 0 20px;
+            margin-bottom: 5px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        
+        .ready-q { color: #00bcd4; text-shadow: 0 0 10px #00bcd4; opacity: 0.3; transition: opacity 0.3s; }
+        .ready-e { color: #ffd700; text-shadow: 0 0 10px #ffd700; opacity: 0.3; transition: opacity 0.3s; }
+        .visible { opacity: 1 !important; animation: pulse 1s infinite; text-shadow: 0 0 15px currentColor; }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
         }
 
-        .controls-hint {
+        /* Combo Position adjustment */
+        .combo-counter {
             position: absolute;
-            bottom: 20px;
-            left: 20px;
-            color: #555;
-            font-size: 14px;
-            background: rgba(255,255,255,0.5);
-            padding: 10px;
-            border-radius: 4px;
+            bottom: 200px; /* Moved up to clear HUD */
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 60px;
+            color: #b91c1c;
+            font-weight: bold;
+            opacity: 0;
+            transition: opacity 0.1s;
+            text-shadow: 2px 2px 0 #fff;
+            pointer-events: none;
+            z-index: 4;
         }
 
         #start-screen, #game-over-screen {
@@ -241,50 +277,64 @@
 <body>
 
     <div id="ui-layer">
-        <div class="hud-top">
-            <div class="health-container">
-                <div style="margin-bottom: 2px; font-weight: bold; color: #1a1a1a; font-size: 12px;">生命 (Life)</div>
-                <div class="health-bar-bg">
-                    <div id="hp-bar" class="health-bar-fill"></div>
-                </div>
-                
-                <div style="margin-top: 5px; margin-bottom: 2px; font-weight: bold; color: #1a1a1a; font-size: 12px;">耐力 (Stamina)</div>
-                <div class="health-bar-bg" style="height: 8px; width: 200px;">
-                    <div id="st-bar" class="health-bar-fill" style="background: #d4af37;"></div>
-                </div>
+        <!-- Top Left: Controls -->
+        <div class="controls-hint" id="controls-hud">
+            <div><span style="color:#b91c1c">WASD</span> 移动</div>
+            <div><span style="color:#b91c1c">右键/空格</span> 瞬步(无敌)</div>
+            <div><span style="color:#b91c1c">左键</span> 连斩</div>
+            <div><span style="color:#b91c1c">长按左键</span> 蓄力/格挡</div>
+        </div>
 
-                <div style="margin-top: 5px; margin-bottom: 2px; font-weight: bold; color: #006064; font-size: 12px;">剑意 (Focus) - [E:20] [Q:30]</div>
-                <div class="health-bar-bg" style="height: 12px; width: 250px; border-color: #006064;">
-                    <div class="marker-20"></div>
-                    <div class="marker-30"></div>
-                    <div id="ult-bar" class="ult-bar-fill"></div>
-                </div>
-            </div>
+        <!-- Top Center: Score -->
+        <div class="hud-top-center">
             <div class="score-board">斩: <span id="score">0</span></div>
         </div>
-        <div id="combo-display" class="combo-counter">连斩!</div>
-        <div class="skill-ready-text">
-            <span id="ready-e" class="ready-e">[E] 月牙斩</span>
-            <span id="ready-q" class="ready-q">[Q] 绝息斩</span>
+
+        <!-- Bottom Center: Status Bars -->
+        <div class="hud-bottom-center">
+            <!-- Skill Text Indicators -->
+            <div class="skill-ready-container">
+                <span id="ready-e" class="ready-e">[E] 月轮舞 (20)</span>
+                <span id="ready-q" class="ready-q">[Q] 绝息斩 (30)</span>
+            </div>
+
+            <!-- Focus Bar -->
+            <div class="bar-label">
+                <span>剑意 (Focus)</span>
+                <span>MAX</span>
+            </div>
+            <div id="ult-bg" class="health-bar-bg">
+                <div class="marker-20"></div>
+                <div class="marker-30"></div>
+                <div id="ult-bar" class="ult-bar-fill"></div>
+            </div>
+
+            <!-- Health Bar -->
+            <div id="hp-bg" class="health-bar-bg">
+                <div id="hp-bar" class="health-bar-fill"></div>
+            </div>
+
+            <!-- Stamina Bar -->
+            <div id="st-bg" class="health-bar-bg">
+                <div id="st-bar" class="health-bar-fill"></div>
+            </div>
         </div>
+
+        <div id="combo-display" class="combo-counter">连斩!</div>
         
         <div id="boss-announcement">
             <div class="boss-warning">WARNING</div>
             <div class="boss-static-text">鬼大将 参上</div>
-        </div>
-
-        <div class="controls-hint" id="controls-hud">
-            WASD 移动 | 长按左键 蓄力/格挡 | 右键 瞬步 | Q 绝息斩 | E 月牙斩
         </div>
     </div>
 
     <div id="start-screen">
         <h1>墨影武士</h1>
         <div class="tutorial">
-            <p><span class="key">WASD</span> 移动 <span class="key">右键</span> 瞬步</p>
+            <p><span class="key">WASD</span> 移动 <span class="key">右键/空格</span> 瞬步</p>
             <p><span class="key">点击左键</span> 拔刀斩 <span class="key">长按左键</span> 蓄力/格挡</p>
-            <p><span class="key">Q</span> 狂风绝息斩 (30剑意: 无敌/连杀)</p>
-            <p><span class="key">E</span> 月牙斩 (20剑意: 停滞旋风/聚怪)</p>
+            <p><span class="key">Q</span> 狂风绝息斩 (30剑意: 固定领域/连杀)</p>
+            <p><span class="key">E</span> 月轮舞 (20剑意: 停滞旋风/聚怪)</p>
             <hr style="border: 0; border-top: 1px solid #aaa; margin: 15px 0;">
             <p style="font-size: 14px; color: #800000;">技巧：蓄力反击会释放双重剑气。</p>
         </div>
@@ -296,8 +346,8 @@
         <h1>胜负已分</h1>
         <h2 id="final-score">斩杀: 0</h2>
         <div class="tutorial">
-            <p><span class="key">WASD</span> 移动 <span class="key">右键</span> 瞬步</p>
-            <p><span class="key">Q</span> 绝息斩 (30) <span class="key">E</span> 月牙斩 (20)</p>
+            <p><span class="key">WASD</span> 移动 <span class="key">右键/空格</span> 瞬步</p>
+            <p><span class="key">Q</span> 绝息斩 (30) <span class="key">E</span> 月轮舞 (20)</p>
             <p>长按左键格挡前方攻击</p>
         </div>
         <br>
@@ -338,6 +388,7 @@
             w: false, a: false, s: false, d: false,
             mouseLeft: false, 
             mouseRight: false,
+            " ": false, // Add Space key state
             q: false, Q: false,
             e: false, E: false
         };
@@ -383,7 +434,7 @@
             }
         }
 
-        // 月牙斩 (Moon Slash / Whirlwind)
+        // 月轮舞 (Moon Slash / Whirlwind)
         class SlashWave extends Entity {
             constructor(x, y, angle) {
                 super(x, y, 160, '#fff');
@@ -627,8 +678,8 @@
                     this.castSlashWave();
                 }
 
-                // Handle Dash Trigger
-                if (keys.mouseRight && !this.isDashing && !this.isCharging && this.dashCooldown <= 0 && this.stamina > 20) {
+                // Handle Dash Trigger (Right Click OR Space)
+                if ((keys.mouseRight || keys[" "]) && !this.isDashing && !this.isCharging && this.dashCooldown <= 0 && this.stamina > 20) {
                     this.startDash();
                 }
 
@@ -1339,7 +1390,15 @@
         function init() {
             resize(); 
             window.addEventListener('resize', resize);
-            window.addEventListener('contextmenu', e => e.preventDefault()); // Prevent Right Click Menu
+            
+            // 修复: 使用捕获阶段 (capture: true) 来尝试在插件之前拦截事件
+            // stopImmediatePropagation() 可以防止事件传递给同一元素上的其他监听器
+            document.addEventListener('contextmenu', e => {
+                e.preventDefault();
+                e.stopPropagation();
+                e.stopImmediatePropagation();
+                return false;
+            }, { capture: true }); 
             
             window.addEventListener('keydown', e => { 
                 if (keys.hasOwnProperty(e.key)) keys[e.key] = true; 
@@ -1350,10 +1409,18 @@
                 if (e.code === 'Space') keys[" "] = false; 
             });
             window.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
+            
+            // 鼠标按下事件
             window.addEventListener('mousedown', (e) => { 
                 if(e.button === 0) keys.mouseLeft = true;
-                if(e.button === 2) keys.mouseRight = true;
+                if(e.button === 2) {
+                    keys.mouseRight = true;
+                    // 尝试在鼠标按下瞬间就拦截，对抗部分依赖 mousedown 的手势插件
+                    // 注意：这可能会有副作用，但在全屏游戏中通常是可接受的
+                    // e.preventDefault(); 
+                }
             });
+            
             window.addEventListener('mouseup', (e) => {
                 if(e.button === 0) keys.mouseLeft = false;
                 if(e.button === 2) keys.mouseRight = false;
